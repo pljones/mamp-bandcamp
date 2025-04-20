@@ -5,8 +5,8 @@ Based on the LMS Bandcamp plugin's logic and adapted for MusicAssistant.
 """
 
 import aiohttp
-from music_assistant.models.errors import LoginFailed
-from music_assistant.models.media_items import Album, Artist, Playlist, Track
+from music_assistant_models.errors import LoginFailed
+from music_assistant_models.media_items import Album, Artist, Playlist, Track
 
 
 class BandcampAPI:

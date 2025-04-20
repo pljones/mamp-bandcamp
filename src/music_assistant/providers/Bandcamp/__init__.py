@@ -11,10 +11,10 @@ import logging
 from typing import AsyncGenerator, TYPE_CHECKING
 
 from music_assistant.models.music_provider import MusicProvider
-from music_assistant.models.config_entries import ConfigEntry, ConfigValueType
-from music_assistant.models.enums import ConfigEntryType, ProviderFeature
-from music_assistant.models.errors import LoginFailed
-from music_assistant.models.media_items import (
+from music_assistant_models.config_entries import ConfigEntry, ConfigValueType
+from music_assistant_models.enums import ConfigEntryType, ProviderFeature
+from music_assistant_models.errors import LoginFailed
+from music_assistant_models.media_items import (
     Album,
     Artist,
     MediaItemType,
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from music_assistant import MusicAssistant
     from music_assistant.models import ProviderInstanceType
     from music_assistant.models.provider import ProviderManifest
-    from music_assistant.models.config_entries import ProviderConfig
+    from music_assistant_models.config_entries import ProviderConfig
 
 
 CONF_COOKIE = "cookie"
