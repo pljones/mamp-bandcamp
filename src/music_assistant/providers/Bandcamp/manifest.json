@@ -1,0 +1,10 @@
+{
+  "type": "music",
+  "domain": "bandcamp",
+  "name": "BandsCampout for MusicAssistant",
+  "description": "Support for the Bandcamp streaming provider in Music Assistant (CoPilot port from LMS BandsCampout)",
+  "codeowners": ["@pljones"],
+  "requirements": ["aiohttp>=3.8.0"],
+  "documentation": "",
+  "multi_instance": true
+}
