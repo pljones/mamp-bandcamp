@@ -1,0 +1,25 @@
+<?xml version='1.0' standalone='yes'?>
+<extension>
+  <name>PLUGIN_BANDCAMP</name>
+  <creator>Michael Herger</creator>
+  <defaultState>enabled</defaultState>
+  <description>PLUGIN_BANDCAMP_META</description>
+  <email>slim@herger.net</email>
+  <homepageURL>http://www.herger.net/Bandcamp</homepageURL>
+  <optionsURL>plugins/Bandcamp/settings.html</optionsURL>
+	<category>musicservices</category>
+  <id>adcdd91b-2850-445a-a8bf-e947bf72eacd</id>
+  <dk>perl-adrusla-saemingser-ligr</dk>
+  <module>Plugins::Bandcamp::Plugin</module>
+  <importmodule>Plugins::Bandcamp::Importer</importmodule>
+  <onlineLibrary>true</onlineLibrary>
+  <icon>plugins/Bandcamp/html/images/logo.png</icon>
+  <targetApplication>
+    <id>SqueezeCenter</id>
+    <maxVersion>*</maxVersion>
+    <minVersion>7.6</minVersion>
+  </targetApplication>
+  <cacheVersion>3</cacheVersion>
+  <type>2</type>
+  <version>1.9.4</version>
+</extension>

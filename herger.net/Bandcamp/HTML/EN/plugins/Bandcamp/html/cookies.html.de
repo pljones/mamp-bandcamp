@@ -1,0 +1,23 @@
+[% pagetitle = 'PLUGIN_BANDCAMP_IDENTITY_TOKEN' | string %]
+[% lefttoright = '1' %]
+[% PROCESS helpheader.html %]
+	<h3>Wie finde ich das Identit&auml;ts-Cookie?</h3>
+	<p>
+		Das Identit&auml;ts-Cookie gibt Ihnen Zugang zu Ressourcen, die Ihnen sonst nicht zur Verf&uuml;gung stehen w&uuml;rden.
+		Leider ist es ein wenig m&uuml;hsam, ein Cookie aus einem Browser herauszuholen. Aber wir bringen das schon hin.
+		Die Suche nach dem Identit&auml;ts-Cookie ist bei jedem Browser etwas anders.
+	</p>
+
+	<p>
+		Zunächst m&uuml;ssen Sie sich bei <a href="https://bandcamp.com" target="_blank">bandcamp.com</a> mit Ihrem Konto anmelden.
+		Bei den Browsern Chrome, Firefox und Safari klicken Sie mit der rechten Maustaste auf Ihr Browserfenster und dann auf
+		"Inspizieren", "Element-Information" oder ähnlich, um die Entwicklerkonsole zu &ouml;ffnen.
+		Wählen Sie die Registerkarte "Anwendung" (Chrome) oder "Speicher" (Firefox und Safari), wählen Sie "Cookies" und klicken
+		Sie auf die Domain "bandcamp.com".
+	</p>
+
+	<p><img src="[% webroot %]plugins/Bandcamp/html/images/bandcamp-cookie.png" style="max-width:1268px"></p>
+
+	<p>Suchen Sie in der Liste nach "identitiy" und kopieren Sie die lange Zeichenfolge aus.</p>
+
+[% PROCESS helpfooter.html %]

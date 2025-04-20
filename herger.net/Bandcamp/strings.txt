@@ -1,0 +1,240 @@
+PLUGIN_BANDCAMP
+	EN	Band's Campout
+
+PLUGIN_BANDCAMP_FAN
+	EN	Fan
+
+PLUGIN_BANDCAMP_DAILY
+	EN	Bandcamp Daily
+
+PLUGIN_BANDCAMP_DAILY_SHOW_TRACKS
+	EN	Daily Show Tracks
+
+PLUGIN_BANDCAMP_WEEKLY
+	EN	Bandcamp Weeklies
+
+PLUGIN_BANDCAMP_WEEKLY_PODCAST
+	DE	Als Podcast hören (mit Kommentaren)
+	EN	Listen as podcast (with comments)
+	FR	Écouter en podcast (avec commentaires)
+
+PLUGIN_BANDCAMP_WEEKLY_SONGS
+	DE	Einzelne Lieder hören (ohne Kommentare)
+	EN	Listen to songs (without comments)
+	FR	Écoutez des chansons (sans commentaires)
+
+PLUGIN_BANDCAMP_MY_MUSIC
+	DE	Mein Bandcamp
+	EN	My Bandcamp
+	FR	Mon Bandcamp
+
+PLUGIN_BANDCAMP_FANPAGE
+	DE	Sammlung
+	EN	Collection
+	FR	Collection
+
+PLUGIN_BANDCAMP_FAN_FOLLOWING_BANDS
+	EN	Bands
+
+PLUGIN_BANDCAMP_FAN_FOLLOWING_FANS
+	EN	Fans
+
+PLUGIN_BANDCAMP_FAN_WISHLIST
+	DE	Wunschliste
+	EN	Wishlist
+	FR	Liste de souhaits
+
+PLUGIN_BANDCAMP_FAN_FOLLOWERS
+	EN	Followers
+
+PLUGIN_BANDCAMP_FAN_MISSING
+	DE	Bitte geben Sie im Logitech Media Server unter Einstellungen/Erweitert/Band's Campout ihren bandcamp.com Benutzernamen ein.
+	EN	Please enter your basecamp.com username in Settings/Advanced/Band's Campout in Logitech Media Server.
+	FR	Veuillez saisir votre nom d'utilisateur bandcamp.com dans "Paramètres/Avancé/Band's Campout" (dans Logitech Media Server).
+
+PLUGIN_BANDCAMP_TOPSELLERS
+	DE	Top verkaufte Alben
+	EN	Top sellers of late
+	FR	Albums les plus vendus
+
+PLUGIN_BANDCAMP_RECENTLY_PLAYED
+	DE	Kürzlich gespielte Alben
+	EN	Albums Recently Played
+	FR	Albums récemment écoutés
+
+PLUGIN_BANDCAMP_SELLING
+	DE	Wird eben gekauft
+	EN	Selling right now
+	FR	En cours d'achat
+
+PLUGIN_BANDCAMP_META
+	DE	Entdecke Künstler, und spiele deren Alben und Tracks von bandcamp.com
+	EN	Browse and play artists, albums and tracks from bandcamp.com
+	FR	Découvrir des artistes et écouter leurs albums et morceaux sur bandcamp.com
+
+PLUGIN_BANDCAMP_SEARCHFOR_TAGS
+	DE	Nach Tags suchen
+	EN	Search For Tags
+	FR	Rechercher par étiquette (tag)
+
+PLUGIN_BANDCAMP_LOCATIONS
+	DE	Orte
+	EN	Locations
+	FR	Lieux
+
+PLUGIN_BANDCAMP_NO_DOWNLOAD
+	DE	Kein Download
+	EN	Not downloadable
+	FR	Non téléchargeable
+
+PLUGIN_BANDCAMP_FREE
+	DE	Album gratis herunterladen!
+	EN	Download album for free!
+	FR	Télécharger l'album gratuitement !
+
+PLUGIN_BANDCAMP_PAID
+	DE	Album kann von folgender Adresse heruntergeladen werden:
+	EN	Download album from the following address:
+	FR	L’album peut être téléchargé à partir de l’adresse suivante :
+
+PLUGIN_BANDCAMP_ABOUT
+	DE	Über dieses Album
+	EN	About this album
+	FR	A propos de cet album
+
+PLUGIN_BANDCAMP_REVIEW
+	DE	Lese Kritik
+	EN	Read Review
+	FR	Lire la critique
+
+PLUGIN_BANDCAMP_LYRICS
+	DE	Liedtexte
+	EN	Lyrics
+	FR	Paroles
+
+PLUGIN_BANDCAMP_CREDITS
+	EN	Credits
+	FR	Crédits
+
+PLUGIN_BANDCAMP_MUSIC_FEED
+	DE	Musik Feed
+	EN	Music Feed
+	FR	Flux de musique
+
+PLUGIN_BANDCAMP_OTHER_TRACKS
+	DE	Weitere Tracks auf diesem Album
+	EN	Other tracks of this album
+	FR	Autres morceaux de cet album
+
+PLUGIN_FROM_BANDCAMP
+	DE	Auf bandcamp.com
+	EN	From bandcamp.com
+	FR	De bandcamp.com
+
+PLUGIN_BANDCAMP_MORE_MATCHES
+	DE	Mehr Treffer...
+	EN	More matches...
+	FR	Plus de correspondances...
+
+PLUGIN_BANDCAMP_STAFF_PICKS
+	CS	Výběr našeho personálu
+	DA	Vi anbefaler
+	DE	Unsere Empfehlungen
+	EN	Staff Picks
+	ES	Nuestras selecciones
+	FI	Suositukset
+	FR	Notre sélection
+	IT	Scelti dallo staff
+	NL	Aanraders van personeel
+	NO	Utvalgte stasjoner
+	PL	Wybór pracowników
+	RU	Наш выбор
+	SV	Våra favoriter
+
+PLUGIN_BANDCAMP_NEW_ARRIVALS
+	DE	Neu eingetroffen
+	EN	New Arrivals
+	FR	Les nouveautés
+
+PLUGIN_BANDCAMP_MOST_RECOMMENDED
+	DE	Meist empfohlene Interpreten
+	EN	Most recommended Artists
+	FR	Artistes les plus recommandés
+
+PLUGIN_BANDCAMP_USERNAME
+	DE	bandcamp.com Benutzername
+	EN	bandcamp.com Username
+	FR	Nom d'utilisateur bandcamp.com
+
+PLUGIN_BANDCAMP_USERNAME_DESC
+	DE	Bitte geben Sie den Benutzernamen ihrer Fan-Seite auf bandcamp.com an.
+	DE	Dein <a href="https://bandcamp.com" target="_blank">bandcamp.com</a> Benutzername. Melde dich bei Bandcamp an, gehe zu "Settings", dann "Fan". Hier wird der Benutzername angezeigt.
+	EN	Your <a href="https://bandcamp.com" target="_blank">bandcamp.com</a> username. Log in to your Bandcamp page. Click on Settings, then click Fan. This page shows your username.
+	FR	Veuillez indiquer le nom d’utilisateur de votre page de fan sur bandcamp.com.
+
+PLUGIN_BANDCAMP_NOT_STREAMABLE
+	DE	* Tracks können nicht wiedergegeben werden
+	EN	* Track is not available for streaming
+	FR	* Pas de streaming pour ce morceau
+
+PLUGIN_BANDCAMP_URL
+	EN	Bandcamp URL
+	FR	URL Bandcamp
+
+PLUGIN_BANDCAMP_NOT_A_URL
+	DE	Tut mir Leid, wir konnten die Bandcamp URL nicht erkennen.
+	EN	Sorry, we couldn’t recognise that as a Bandcamp URL.
+	FR	Désolé, impossible de reconnaître cela comme une URL Bandcamp.
+
+PLUGIN_BANDCAMP_MISSING_SSL
+	DE	Band's Campout benötigt das Perl Modul IO::Socket::SSL! Ohne dieses Modul ist die Nutzung diese Plugins NICHT möglich. Bitte benutze den Paket-Manager deines Betriebssystems um es zu installieren.
+	EN	Band's Campout requires the Perl module IO::Socket::SSL. You can NOT use this plugin without this module. Please use your operating system's package manager to install it.
+	FR	Le module Perl IO::Socket::SSL est indispensable pour Band's Campout. Utilisez le gestionnaire de paquets de votre système d'exploitation pour installer ce module.
+
+PLUGIN_BANDCAMP_COLLECTION_BY_NAME
+	DE	Alphabetisch sortieren
+	EN	Sort alphabetically
+	FR	Tri alphabétique
+
+PLUGIN_BANDCAMP_COLLECTION_BY_DATE
+	DE	Nach Hinzufügedatum sortieren
+	EN	Sort by time of addition
+	FR	Tri par date d'ajout
+
+PLUGIN_BANDCAMP_IDENTITY_TOKEN
+	DE	Identitäts-Cookie
+	EN	Identity Cookie
+	FR	Cookie d'identité
+
+PLUGIN_BANDCAMP_IDENTITY_TOKEN_DESC
+	DE	Das Identitäts-Cookie. Leider ist das Finden des Cookies in jedem Browser anders. In <a href="/plugins/Bandcamp/html/cookies.html" target="_blank">diesem Dokument</a> gibt es weiterführende Informationen.
+	EN	Your identity cookie. Finding the identity cookie is different for each browser. See <a href="/plugins/Bandcamp/html/cookies.html" target="_blank">this document</a> for more information.
+	FR	Le cookie d'identité vous donne accès à des ressources qui, autrement, ne seraient pas disponibles. Vous devez l'exporter depuis votre navigateur avec lequel vous êtes connecté à bandcamp.com. Il est de la forme "identity=6%0909ddd7 ..;" suivi d'un grand nombre de caractères.
+
+PLUGIN_BANDCAMP_IDENTITY_TOKEN_INVALID
+	DE	Es trat ein Fehler beim Abruf der Daten auf. Bitte überprüfen Sie das Identitäts-Cookie in den Plugin-Einstellungen.
+	EN	There was an error accessing the data servers. Please double-check or re-set your identity cookie in the plugin settings.
+	FR	Une erreur s'est produite lors de l'accès aux serveurs de données. Veuillez vérifier ou réinitialiser votre cookie d'identité dans les paramètres du plugin.
+
+PLUGIN_BANDCAMP_ALBUM_NOT_FOUND
+	DE	Das gewünschte Album wurde nicht gefunden. Dies kann vorkommen, wenn ein Verkäufer ein Album vom Verkauf zurückgezogen hat. Solche Alben sind auf bandcamp.com mit "PRIVATE" gekennzeichnet.
+	EN	This album was not found. This can happen if an album as been removed from public view. Such albums are labeled "PRIVATE" on bandcamp.com.
+	FR	Cet album n'a pas été trouvé. Cela peut arriver s'il a été retiré de la vue publique. De tels albums sont étiquetés "PRIVATE" sur bandcamp.com.
+
+PLUGIN_BANDCAMP_ARTISTS_PROGRESS
+	DE	Bandcamp Interpreten
+	EN	Bandcamp Artists
+	NL	Bandcamp Artiesten
+	FR	Bandcamp Artistes
+
+PLUGIN_BANDCAMP_PROGRESS_READ_ALBUMS
+	DE	Lese Alben...
+	EN	Fetching Albums...
+	FR	Récupération des albums...
+	NL	Albums ophalen...
+
+PLUGIN_BANDCAMP_ALBUMS_PROGRESS
+	DE	Bandcamp Alben
+	EN	Bandcamp Albums
+	NL	Bandcamp Albums
+	FR	Bandcamp Albums

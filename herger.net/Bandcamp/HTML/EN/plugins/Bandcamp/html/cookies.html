@@ -1,0 +1,21 @@
+[% pagetitle = 'PLUGIN_BANDCAMP_IDENTITY_TOKEN' | string %]
+[% lefttoright = '1' %]
+[% PROCESS helpheader.html %]
+	<h3>How to get to the web Identity Cookie</h3>
+	<p>
+		The identity cookie gives you access to resource which otherwise would not be available to you.
+		Unfortunately getting a cookie out of a browser is a bit of manual work. But we'll get you there.
+		Finding the identity cookie is different for each browser.
+	</p>
+
+	<p>
+		First of all you'll have to sign in to <a href="https://bandcamp.com" target="_blank">bandcamp.com</a> with your account.
+		For Chrome, Firefox, and Safari browsers, right-click on your browser window, and then click "Inspect" to open the developer console.
+		Choose the "Application" tab (Chrome) or the "Storage" tab (Firefox and Safari), select "Cookies", and click on the domain "bandcamp.com".
+	</p>
+
+	<p><img src="[% webroot %]plugins/Bandcamp/html/images/bandcamp-cookie.png" style="max-width:1268px"></p>
+
+	<p>In the list, look for "identity" and copy the long string.</p>
+
+[% PROCESS helpfooter.html %]
