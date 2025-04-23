@@ -4,127 +4,98 @@ Bandcamp support for MusicAssistant with cookie-based login functionality.
 Based on the LMS Bandcamp plugin (https://github.com/pljones/mamp-bandcamp/tree/main/herget.net/Bandcamp)
 and the MusicAssistant YouTube plugin.
 """
+"""MusicAssistant provider for Bandcamp."""
 
 from __future__ import annotations
 
-import logging
-from typing import AsyncGenerator, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
-from music_assistant.models.music_provider import MusicProvider
-from music_assistant_models.config_entries import ConfigEntry, ConfigValueType
-from music_assistant_models.enums import ConfigEntryType, ProviderFeature
-from music_assistant_models.errors import LoginFailed
-from music_assistant_models.media_items import (
+from music_assistant.common.models.config_entry import ConfigEntry
+from music_assistant.common.models.enums import ProviderType, MediaType, ProviderFeature
+from music_assistant.common.models.media_items import (
     Album,
     Artist,
-    MediaItemType,
     Playlist,
-    SearchResults,
     Track,
+    SearchResults,
 )
+from music_assistant.server.models.music_provider import MusicProviderWithCapabilities
+
 from .helpers import BandcampAPI
 
 if TYPE_CHECKING:
-    from music_assistant import MusicAssistant
-    from music_assistant.models import ProviderInstanceType
-    from music_assistant.models.provider import ProviderManifest
-    from music_assistant_models.config_entries import ProviderConfig
+    from collections.abc import AsyncGenerator
 
 
-CONF_COOKIE = "cookie"
+class BandcampProvider(MusicProviderWithCapabilities):
+    """MusicAssistant provider for Bandcamp."""
 
-SUPPORTED_FEATURES = {
-    ProviderFeature.LIBRARY_ARTISTS,
-    ProviderFeature.LIBRARY_ALBUMS,
-    ProviderFeature.LIBRARY_TRACKS,
-    ProviderFeature.SEARCH,
-    ProviderFeature.BROWSE,
-}
+    _api: BandcampAPI
 
-
-async def setup(mass: MusicAssistant, manifest: ProviderManifest, config: ProviderConfig) -> ProviderInstanceType:
-    """Initialize Bandcamp provider with given configuration."""
-    return BandcampProvider(mass, manifest, config)
-
-
-async def get_config_entries(
-    mass: MusicAssistant, instance_id: str | None = None, action: str | None = None, values: dict[str, ConfigValueType] | None = None
-) -> tuple[ConfigEntry, ...]:
-    """Return Config entries to setup this provider."""
-    return (
-        ConfigEntry(
-            key=CONF_COOKIE,
-            type=ConfigEntryType.SECURE_STRING,
-            label="Bandcamp Session Cookie",
-            required=True,
-        ),
-    )
-
-
-class BandcampProvider(MusicProvider):
-    """Provider for Bandcamp."""
-
-    def __init__(self, mass: MusicAssistant, manifest: ProviderManifest, config: ProviderConfig):
-        """Initialize Bandcamp provider."""
-        super().__init__(mass, manifest, config)
-        self.api = BandcampAPI()
-        self.cookie = config.get_value(CONF_COOKIE)
-        self.logger = logging.getLogger(__name__)
-        self.authenticated = False
+    async def setup(self, config: ConfigEntry) -> bool:
+        self._api = BandcampAPI(config)
+        return await self._api.setup()
 
     @property
-    def supported_features(self) -> set[ProviderFeature]:
-        """Return the features supported by this provider."""
-        return SUPPORTED_FEATURES
+    def name(self) -> str:
+        return "Bandcamp"
 
-    async def login(self) -> None:
-        """Authenticate with Bandcamp using a session cookie."""
-        self.logger.info("Authenticating to Bandcamp with provided session cookie...")
-        try:
-            self.authenticated = await self.api.authenticate(self.cookie)
-            self.logger.info("Successfully authenticated to Bandcamp.")
-        except LoginFailed as err:
-            self.logger.error("Failed to authenticate to Bandcamp: %s", str(err))
-            raise LoginFailed("Invalid Bandcamp session cookie") from err
+    @property
+    def provider_type(self) -> ProviderType:
+        return ProviderType.MUSIC
 
-    async def search(self, search_query: str, media_types: list[MediaItemType], limit: int = 5) -> SearchResults:
-        """Perform search on Bandcamp."""
-        await self._ensure_authenticated()
-        results = await self.api.search(search_query, media_types, limit)
-        return results
+    @property
+    def supported_mediatypes(self) -> tuple[MediaType, ...]:
+        return (
+            MediaType.ARTIST,
+            MediaType.ALBUM,
+            MediaType.TRACK,
+            MediaType.PLAYLIST,
+        )
 
-    async def get_library_artists(self) -> AsyncGenerator[Artist, None]:
-        """Retrieve all library artists from Bandcamp."""
-        await self._ensure_authenticated()
-        artists = await self.api.get_library_artists()
-        for artist in artists:
-            yield artist
+    @property
+    def capabilities(self) -> set[ProviderFeature]:
+        return {
+            ProviderFeature.SEARCH,
+            ProviderFeature.STREAM_DETAILS,
+            ProviderFeature.LIBRARY_TRACKS,
+            ProviderFeature.LIBRARY_ALBUMS,
+            ProviderFeature.LIBRARY_ARTISTS,
+            ProviderFeature.LIBRARY_PLAYLISTS,
+            ProviderFeature.BROWSE,
+        }
 
-    async def get_library_albums(self) -> AsyncGenerator[Album, None]:
-        """Retrieve all library albums from Bandcamp."""
-        await self._ensure_authenticated()
-        albums = await self.api.get_library_albums()
-        for album in albums:
-            yield album
+    async def search(self, search_query, media_types: list[MediaType]) -> SearchResults:
+        return await self._api.search(search_query, media_types)
 
-    async def get_library_tracks(self) -> AsyncGenerator[Track, None]:
-        """Retrieve all library tracks from Bandcamp."""
-        await self._ensure_authenticated()
-        tracks = await self.api.get_library_tracks()
-        for track in tracks:
+    async def get_track(self, prov_track_id: str) -> Track:
+        return await self._api.get_track(prov_track_id)
+
+    async def get_album(self, prov_album_id: str) -> Album:
+        return await self._api.get_album(prov_album_id)
+
+    async def get_artist(self, prov_artist_id: str) -> Artist:
+        return await self._api.get_artist(prov_artist_id)
+
+    async def get_playlist(self, prov_playlist_id: str) -> Playlist:
+        return await self._api.get_playlist(prov_playlist_id)
+
+    async def get_stream_details(self, item_id: str) -> Track:
+        return await self._api.get_stream(item_id)
+
+    async def library_tracks(self) -> AsyncGenerator[Track, None]:
+        async for track in self._api.get_user_collection():
             yield track
 
-    async def get_bandcamp_daily(self) -> list[Playlist]:
-        """Fetch Bandcamp Daily as playlists."""
-        await self._ensure_authenticated()
-        return await self.api.get_daily_shows()
+    async def library_albums(self) -> AsyncGenerator[Album, None]:
+        async for album in self._api.get_user_albums():
+            yield album
 
-    async def get_bandcamp_daily_details(self, show_id: str) -> dict[str, list]:
-        """Fetch details of a specific Bandcamp Daily show."""
-        await self._ensure_authenticated()
-        return await self.api.get_daily_show(show_id)
+    async def library_artists(self) -> AsyncGenerator[Artist, None]:
+        async for artist in self._api.get_user_artists():
+            yield artist
 
-    async def _ensure_authenticated(self) -> None:
-        """Ensure the user is authenticated before making API calls."""
-        if not self.authenticated:
-            await self.login()
+    async def library_playlists(self) -> AsyncGenerator[Playlist, None]:
+        async for pl in self._api.get_user_playlists():
+            yield pl
+
