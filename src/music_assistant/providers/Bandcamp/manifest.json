@@ -2,7 +2,7 @@
   "type": "music",
   "domain": "bandcamp",
   "name": "BandsCampout for MusicAssistant",
-  "description": "Support for the Bandcamp streaming provider in Music Assistant (CoPilot port from LMS BandsCampout)",
+  "description": "Michael Herger's BandsCampout http://www.herger.net/slim-plugins ported to MusicAssistant by CoPilot and ChatGPT (piloted by pljones)",
   "codeowners": ["@pljones"],
   "requirements": ["aiohttp>=3.8.0"],
   "documentation": "",
