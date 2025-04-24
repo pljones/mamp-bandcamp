@@ -14,16 +14,16 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-Based on the LMS Bandcamp plugin (https://github.com/pljones/mamp-bandcamp/tree/main/herget.net/Bandcamp)
-and partly on the MusicAssistant YouTube plugin, refactoring in line with current MusicAssistant
-best practice and a structured coding approach proposed by Anthropic Claude.
 """
-
-"""MusicAssistant Bandcamp Provider entry points."""
+"""Constants for the Bandcamp provider."""
 from __future__ import annotations
 
-from .const import DOMAIN
-from .provider import BandcampProvider
+DOMAIN = "bandcamp"
 
-__all__ = ["DOMAIN", "BandcampProvider"]
+# Base URLs
+BANDCAMP_API_URL = "https://bandcamp.com/api"
+BANDCAMP_HTML_URL = "https://bandcamp.com"
+
+# Default values
+DEFAULT_TIMEOUT = 10
+DEFAULT_CACHE_EXPIRY = 1800  # 30 minutes
