@@ -31,6 +31,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 from music_assistant.common.models.errors import LoginFailed, MediaNotFoundError
+from music_assistant.helpers.auth import AuthenticationHelper
 from music_assistant.server.helpers.app_vars import app_var
 
 from .const import BANDCAMP_API_URL, BANDCAMP_HTML_URL, DEFAULT_TIMEOUT
@@ -54,6 +55,7 @@ class BandcampApiClient:
         self.user_identity = BandcampUserIdentity()
         self._authenticating = False
         self._auth_lock = asyncio.Lock()
+        self.auth_helper = AuthenticationHelper()
         
         # Directory for storing cookie file
         self.user_data_dir = os.path.join(app_var.USER_DATA_DIR, self.domain)
@@ -65,67 +67,29 @@ class BandcampApiClient:
         await self.session.close()
 
     async def authenticate_with_cookies(self, auth_token: Optional[str] = None) -> bool:
-        """Authenticate with saved cookies or provided auth token."""
-        if self._authenticating:
-            return False
-        
-        async with self._auth_lock:
-            if self._authenticating:
-                return False
-            self._authenticating = True
-            
-            try:
-                # Load cookies from file or config
-                cookies = {}
-                
-                # Check if auth_token is provided
+        """Authenticate with saved cookies or provided auth token using AuthenticationHelper."""
+        try:
+            async with self.auth_helper.start_session():
                 if auth_token:
                     LOGGER.info("Using provided auth token for Bandcamp authentication")
-                    cookies["identity"] = auth_token
-                elif os.path.isfile(self.cookie_file):
-                    try:
-                        with open(self.cookie_file, "r") as f:
-                            cookies = json.load(f)
-                            LOGGER.info("Loaded cookies from file for Bandcamp authentication")
-                    except Exception as exc:
-                        LOGGER.warning("Failed to load cookies from file: %s", str(exc))
-                
-                if not cookies or "identity" not in cookies:
-                    LOGGER.warning("No valid cookies found for Bandcamp authentication")
-                    self._authenticating = False
+                    self.auth_helper.set_cookie("identity", auth_token)
+                else:
+                    LOGGER.info("Trying to load cookies from file")
+                    await self.auth_helper.load_cookies(self.cookie_file)
+
+                # Verify login by checking user data
+                user_data = await self.auth_helper.get_authenticated_user_data(self.session, BANDCAMP_HTML_URL)
+                if user_data:
+                    self.user_identity = BandcampUserIdentity.from_api_data(user_data)
+                    await self.auth_helper.save_cookies(self.cookie_file)
+                    LOGGER.info("Successfully authenticated with Bandcamp using cookies")
+                    return True
+                else:
+                    LOGGER.warning("Failed to authenticate using cookies")
                     return False
-                
-                # Add cookies to session
-                for name, value in cookies.items():
-                    self.session.cookie_jar.update_cookies({name: value}, URL=BANDCAMP_HTML_URL)
-                
-                # Verify login by checking for user data
-                async with self.session.get(BANDCAMP_HTML_URL) as resp:
-                    home_html = await resp.text()
-                
-                user_data_match = USER_DATA_REGEX.search(home_html)
-                if not user_data_match:
-                    raise LoginFailed("Failed to retrieve user data with cookies")
-                
-                user_data = json.loads(user_data_match.group(1))
-                fan_data = user_data.get("identities", {}).get("fan")
-                
-                if not fan_data:
-                    raise LoginFailed("Failed to retrieve user identity with cookies")
-                
-                self.user_identity = BandcampUserIdentity.from_api_data(fan_data)
-                
-                LOGGER.info("Successfully authenticated with Bandcamp using cookies")
-                
-                # Save cookies for future use
-                self._save_cookies()
-                return True
-            
-            except Exception as exc:
-                LOGGER.error("Authentication error with cookies: %s", str(exc))
-                return False
-            finally:
-                self._authenticating = False
+        except Exception as exc:
+            LOGGER.error("Authentication error with cookies: %s", str(exc))
+            return False
 
     async def authenticate_with_credentials(self, username: str, password: str) -> bool:
         """Authenticate with username and password."""
@@ -133,79 +97,30 @@ class BandcampApiClient:
             return False
         
         async with self._auth_lock:
-            if self._authenticating:
-                return False
-            self._authenticating = True
-            
-            try:
-                # Step 1: Get the login page to extract CSRF token
+        """Authenticate with username and password using AuthenticationHelper."""
+        try:
+            async with self.auth_helper.start_session():
                 login_url = f"{BANDCAMP_HTML_URL}/login"
-                async with self.session.get(login_url) as resp:
-                    if resp.status != 200:
-                        raise LoginFailed(f"Failed to get login page: {resp.status}")
-                    html = await resp.text()
-                
-                soup = BeautifulSoup(html, "html.parser")
-                token_input = soup.find("input", {"name": "authenticity_token"})
-                if not token_input:
-                    raise LoginFailed("Could not find CSRF token")
-                
-                token = token_input.get("value")
-                
-                # Step 2: Submit login form
+                LOGGER.info("Submitting user credentials to %s", login_url)
+
+                # Submit credentials
                 form_data = {
-                    "utf8": "✓",
-                    "authenticity_token": token,
                     "user_session[login]": username,
                     "user_session[password]": password,
                     "user_session[remember_me]": "1",
                 }
-                
-                async with self.session.post(login_url, data=form_data, allow_redirects=True) as resp:
-                    if "login_error" in str(await resp.text()):
-                        raise LoginFailed("Invalid username or password")
-                
-                # Step 3: Verify login by checking for user data
-                async with self.session.get(BANDCAMP_HTML_URL) as resp:
-                    home_html = await resp.text()
-                
-                user_data_match = USER_DATA_REGEX.search(home_html)
-                if not user_data_match:
-                    raise LoginFailed("Failed to retrieve user data after login")
-                
-                user_data = json.loads(user_data_match.group(1))
-                fan_data = user_data.get("identities", {}).get("fan")
-                
-                if not fan_data:
-                    raise LoginFailed("Failed to retrieve user identity")
-                
-                self.user_identity = BandcampUserIdentity.from_api_data(fan_data)
-                
-                LOGGER.info("Successfully authenticated with Bandcamp using credentials")
-                
-                # Save cookies for future use
-                self._save_cookies()
-                return True
-            
-            except Exception as exc:
-                LOGGER.error("Authentication error with credentials: %s", str(exc))
-                return False
-            finally:
-                self._authenticating = False
-
-    def _save_cookies(self) -> None:
-        """Save current session cookies to file."""
-        try:
-            cookies = {}
-            for cookie in self.session.cookie_jar:
-                cookies[cookie.key] = cookie.value
-            
-            with open(self.cookie_file, "w") as f:
-                json.dump(cookies, f)
-            
-            LOGGER.debug("Saved Bandcamp cookies to file")
+                user_data = await self.auth_helper.submit_form(self.session, login_url, form_data)
+                if user_data:
+                    self.user_identity = BandcampUserIdentity.from_api_data(user_data)
+                    await self.auth_helper.save_cookies(self.cookie_file)
+                    LOGGER.info("Successfully authenticated with Bandcamp using credentials")
+                    return True
+                else:
+                    LOGGER.warning("Failed to authenticate using credentials")
+                    return False
         except Exception as exc:
-            LOGGER.warning("Failed to save cookies to file: %s", str(exc))
+            LOGGER.error("Authentication error with credentials: %s", str(exc))
+            return False
 
     async def get_collection_items(self) -> List[Dict[str, Any]]:
         """Get user's collection items."""
