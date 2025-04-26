@@ -19,6 +19,24 @@ Can you provide something like the MusicAssistant YouTube plugin
 All rights of the original creators of the source should be annotated with the necessary licence notices included.
 </blockquote>
 
+....
+
+...a dream is just a dream...
+
+Time went by, certainly.  It became clearer that AI was not going to be able to parse the LMS data structures, form a model
+of what the Bandcamp LMS plugin was doing in concrete terms, abstract that model, parse the MA data structures, form an
+abstract model of what an MA music provider should do, map the LMS Bandcamp plugin abstract model to the MA music provider
+abstract model and then generate a concrete implementation of that model.
+
+Yes, it sounds like a lot of hard work.  That, of course, is why I wanted to off-load it.
+
+None of the AI models could self-monitor progress, identify failures, identify loops, recover from errors, nor even simply
+keep track of the goal.
+
+So this branch is archived at this point.  The next commit will revert "main" back to the beginning and start over - by hand.
+
+....
+
 During the development cycle with CoPilot, I had to provide it with the unpacked ZIP of the LMS BandsCampout
 perl source.  That is also available in this repository.  CoPilot used this to develop the Bandcamp-specific features.
 
