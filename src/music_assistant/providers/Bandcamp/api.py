@@ -46,25 +46,22 @@ USER_DATA_REGEX = re.compile(r"var UserData\s*=\s*({.*?});", re.DOTALL)
 
 
 class BandcampApiClient:
-    """Client to interact with Bandcamp's API and website."""
+    """Client to interact with Bandcamp's API and website, with support for multiple instances."""
 
-    def __init__(self, domain: str):
+    def __init__(self, domain: str, instance_id: str):
         """Initialize the API client."""
         self.domain = domain
+        self.instance_id = instance_id
         self.session = aiohttp.ClientSession()
         self.user_identity = BandcampUserIdentity()
         self._authenticating = False
         self._auth_lock = asyncio.Lock()
         self.auth_helper = AuthenticationHelper()
         
-        # Directory for storing cookie file
-        self.user_data_dir = os.path.join(app_var.USER_DATA_DIR, self.domain)
+        # Directory for storing instance-specific cookie file
+        self.user_data_dir = os.path.join(app_var.USER_DATA_DIR, f"{self.domain}_{self.instance_id}")
         os.makedirs(self.user_data_dir, exist_ok=True)
         self.cookie_file = os.path.join(self.user_data_dir, "cookies.json")
-
-    async def close(self) -> None:
-        """Close the API client and cleanup resources."""
-        await self.session.close()
 
     async def authenticate_with_cookies(self, auth_token: Optional[str] = None) -> bool:
         """Authenticate with saved cookies or provided auth token using AuthenticationHelper."""
@@ -121,6 +118,10 @@ class BandcampApiClient:
         except Exception as exc:
             LOGGER.error("Authentication error with credentials: %s", str(exc))
             return False
+
+    async def close(self) -> None:
+        """Close the API client and cleanup resources."""
+        await self.session.close()
 
     async def get_collection_items(self) -> List[Dict[str, Any]]:
         """Get user's collection items."""
