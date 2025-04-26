@@ -6,5 +6,7 @@
   "codeowners": ["@pljones"],
   "requirements": ["aiohttp>=3.8.0"],
   "documentation": "",
+  "config_flow": true,
+  "dependencies": ["auth"],
   "multi_instance": true
 }
