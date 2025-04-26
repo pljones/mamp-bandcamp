@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Bandcamp support for MusicAssistant.
 Copyright (C) 2025 Peter L Jones <peter@drealm.info>
@@ -17,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 """Bandcamp API client."""
-from __future__ import annotations
 
 import asyncio
 import json

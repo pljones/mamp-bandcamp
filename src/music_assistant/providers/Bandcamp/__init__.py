@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Bandcamp support for MusicAssistant.
 Copyright (C) 2025 Peter L Jones <peter@drealm.info>
@@ -21,7 +23,6 @@ best practice and a structured coding approach proposed by Anthropic Claude.
 """
 
 """MusicAssistant Bandcamp Provider entry points."""
-from __future__ import annotations
 
 from .const import DOMAIN
 from .provider import BandcampProvider

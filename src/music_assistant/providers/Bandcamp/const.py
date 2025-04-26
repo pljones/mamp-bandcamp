@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Bandcamp support for MusicAssistant.
 Copyright (C) 2025 Peter L Jones <peter@drealm.info>
@@ -15,8 +17,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
 """Constants for the Bandcamp provider."""
-from __future__ import annotations
 
 DOMAIN = "bandcamp"
 
